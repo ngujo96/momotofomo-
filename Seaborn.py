@@ -1,27 +1,14 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # Plotting with Seaborn
-# 
 # Seaborn is a plotting package that leverages the power of Matplotlib, but specializes and refines that interface to support visualization of tabular data and their statistical properties.  By convention, seaborn is imported as ```sns```, a module that contains a variety of different plotting functions, as outlined <a href="https://seaborn.pydata.org/api.html">here</a>.
-# 
-# Let's do some initial imports.
-
-# In[37]:
-
 
 import seaborn as sns
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
-
 
 # It turns out that the seaborn package contains some sample datasets that can be loaded using the ```sns.load_dataset``` function. (If you want to find out what datasets are available, you can call ```sns.get_dataset_names()```.)  Many of the examples in the <a href="https://seaborn.pydata.org/tutorial.html">Official seaborn tutorial</a> use the "tips" dataset.)  We're going to load a different one instead, named "mpg", which contains information about different car models and how their mpg rating (miles per gallon) relates to other vehicle characteristics.
 # 
 # ### Step 1.
 # 
 # * Load the "mpg" dataset from sns and assign it to the variable ```mpg```.  This loads the data into a pandas dataframe.  Take a peek at the data using the ```head()``` method. Note: Use the way the "tips" dataset is loaded in the <a href="https://seaborn.pydata.org/tutorial/relational.html#relating-variables-with-scatter-plots">Relating variables with scatter plots</a> tutorial as a reference for how you can load the "mpg" dataset.
-
-# In[38]:
 
 
 import seaborn as sns
@@ -30,13 +17,9 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 mpg = sns.load_dataset('mpg')
 mpg.head()
 
-
 # As you can see, one of the columns in the dataframe is the "name" of the car, which combines information about both the make (manufacturer) of the car, and the model.  It would be helpful to separate out the information just about the make, and insert that in a new column in the dataframe.  While this is more about how to manipulate pandas dataframes than it is about plotting them using seaborn, you might be interested in the little bit of code below that applies a function to each row of the "name" column to create a new column called "make", by splitting the name string into a list of words and then extracting the first element of that list which contains the make.  The function that we're applying to each row does not have a name, but is created on the fly using the <a href="https://docs.python.org/3/tutorial/controlflow.html?highlight=lambda#lambda-expressions">Python lambda keyword</a>.  More information about applying functions to pandas dataframes can be found <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">here</a>.
 # 
 # * Execute the code cell below and then take another peek using the ```head``` method to verify that a new column called "make" has been added to the dataframe.
-
-# In[39]:
-
 
 mpg['make'] = mpg['name'].apply(lambda s: s.split()[0])
 mpg.head()
@@ -49,15 +32,6 @@ mpg.head()
 # 
 # Look <a href="https://seaborn.pydata.org/tutorial/relational.html#relating-variables-with-scatter-plots">here</a> for some tutorial material and documentation on the ```relplot``` function.
 # 
-
-# ## Graded Cell
-# 
-# This cell is worth 40% of the grade for this assignment. <i>Note: a self-check will not accompany this assignment</i><br>
-# Your plot should look like this: <br><img src="seabornstep2.png" width=300 height=300  align="left"/>
-# 
-
-# In[40]:
-
 
 sns.relplot(x="horsepower", y="mpg", data=mpg)
 
@@ -84,8 +58,6 @@ plt.show()
 # 
 # Before making such a plot, however, it will be useful to clean up the ```mpg``` dataframe a little bit, since there is a small amount of missing data.  Specifically, examine the output of ```mpg.info()``` in the code cell below (execute the code cell to view the output).  You should notice that while most data columns contain 398 non-null entries, the horsepower column contains only 392.  We were able to make the scatterplots above even with the missing horsepower data, but the absence of those data will generate some warnings in the plots below.
 
-# In[48]:
-
 
 sns.relplot(x="horsepower", y="mpg", hue="model_year", data=mpg)
 
@@ -110,13 +82,6 @@ mpg.dropna(inplace=True)
 # * Some of the data relationships seem a bit surprising.  For example, acceleration is inversely associated with horsepower.  One might expect that a car with more horsepower would be able to achieve greater accelerations, but horsepower is also strongly correlated with weight.
 # 
 # You can find examples of ```sns.pairplot``` in both the <a href="https://seaborn.pydata.org/tutorial/axis_grids.html#plotting-pairwise-data-relationships">Plotting pairwise data relationships</a> tutorial and the <a href="https://seaborn.pydata.org/tutorial/distributions.html#visualizing-pairwise-relationships-in-a-dataset">Visualizing pairwise relationships in a dataset</a> tutorial. Note: for the purposes of this activity you will not need to apply ```hue```, ```height```, or any other options to your plot.
-
-# ## Graded Cell
-# 
-# This cell is worth 30% of the grade for this assignment. <i>Note: a self-check will not accompany this assignment</i><br>
-# Your plot should look like this:<br><img src="seabornstep4.png" width=300 height=300  align="left"/>
-
-# In[46]:
 
 
 sns.pairplot(data=mpg)
@@ -152,12 +117,7 @@ mpg_corr
 # 
 # You can find examples of ```sns.heatmap``` and the application of the optional  ```annot``` argument in the <a href="https://seaborn.pydata.org/generated/seaborn.heatmap.html?highlight=heatmap#seaborn.heatmap">seaborn.heatmap</a> documentation.
 
-# ## Graded Cell
-# 
-# This cell is worth 30% of the grade for this assignment. <i>Note: a self-check will not accompany this assignment</i><br>
-# Your plot should look like this: <br><img src="seabornstep6.png" width=400 height=400  align="left"/>
 
-# In[51]:
 
 
 sns.heatmap(mpg_corr, annot=True)
@@ -209,7 +169,6 @@ sns.
 # 
 # You can find examples of ```sns.catplot``` in the <a href="https://seaborn.pydata.org/generated/seaborn.catplot.html?highlight=catplot#seaborn.catplot">seaborn.catplot</a> documentation. While you will be using the ```kind='box'``` option for your plot, you will find examples of ```kind='violin'``` and ```kind='count'``` on the page linked above.
 
-# In[ ]:
 
 
 
